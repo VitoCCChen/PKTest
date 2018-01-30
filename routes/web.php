@@ -6,4 +6,4 @@ Route::get('/', function () {
 
 Route::get('/live', 'liveController@index');
 
-Route::get('/live_ins', 'liveInsController@index');
+Route::get('/live_ins/{id}', 'liveInsController@index');

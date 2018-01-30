@@ -8,7 +8,7 @@
                 <!-- BLOG START -->
                 <div class="col-md-9 blog-post date-style-1 blog-detail">
 
-                    <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/10153231379946729/" data-show-text="false">
+                    <div class="fb-video" data-href="{{ $data->pgram_url }}" data-show-text="false">
 
                         <div class="fb-xfbml-parse-ignore">
                             <blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/">
@@ -20,17 +20,18 @@
                     </div>
                     <div class="wt-post-meta ">
                         <ul>
-                            <li class="post-date">2017-11-01</li>
+                            <li class="post-date">{{ $data->ep_start_time }}</li>
                         </ul>
                     </div>
                     <div class="wt-post-title ">
-                        <h3 class="post-title"><a href="javascript:void(0);">擁有小狗般無辜眼神，看到她，你不可能不融化!</a></h3>
+                        <h3 class="post-title"><a href="javascript:void(0);">{{ $data->pgram_description }}</a></h3>
                     </div>
 
                     <div class="wt-post-tags p-b20">
                         <div class="post-tags">
-                            <a href="javascript:void(0);">可愛</a>
-                            <a href="javascript:void(0);">台灣女孩</a>
+                            @foreach($data->ep_anchors as $anchor)
+                                <a href="javascript:void(0);">{{  $anchor->name }}</a>
+                            @endforeach
                         </div>
                     </div>
                     <div class="wt-post-text">

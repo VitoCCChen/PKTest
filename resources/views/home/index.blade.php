@@ -1350,14 +1350,16 @@
 
 @section('scriptArea_1')
     <!-- REVOLUTION JS FILES -->
-    <script type="text/javascript" src="/js/jquery.themepunch.tools.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
 
     <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
-    <script type="text/javascript" src="/js/revolution-plugin.js"></script>
+    <script type="text/javascript" src="/revolution/js/extensions/revolution-plugin.js"></script>
+    <!-- REVOLUTION SLIDER FUNCTION  ===== -->
+    <script type="text/javascript" src="js/rev-script-1.js"></script>
 @stop
 
-@section('scriptArea_1')
+@section('scriptArea_2')
     <script>
         $(document).ready(function(){
 

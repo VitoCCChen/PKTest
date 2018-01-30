@@ -41,7 +41,7 @@
         <div class="main-bar bg-white">
             <div class="container">
                 <div class="logo-header">
-                    <a href="home">
+                    <a href="/">
                         <img src="/img/logo.png" width="43" height="20" alt="" />
                     </a>
                 </div>
@@ -56,11 +56,12 @@
                 <!-- MAIN Vav -->
                 <div class="header-nav navbar-collapse collapse ">
                     <ul class=" nav navbar-nav">
-                        <li>
-                            <a href="home">首頁</a>
+                        <li class="">
+                            <a href="/">首頁</a>
                         </li>
-                        <li class="active">
-                            <a href="live">直播節目</a>
+
+                        <li class="">
+                            <a href="/live">直播節目</a>
                         </li>
                     </ul>
                 </div>
