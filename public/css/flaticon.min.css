@@ -1,0 +1,58 @@
+@font-face{font-family:"Flaticon";src:url("../fonts/Flaticon.eot");src:url("../fonts/Flaticon.eot?#iefix") format("embedded-opentype"),
+url("../fonts/Flaticon.woff") format("woff"),
+url("../fonts/Flaticon.ttf") format("truetype"),
+url("../fonts/Flaticon.svg#Flaticon") format("svg");font-weight:normal;font-style:normal;}
+@media screen and (-webkit-min-device-pixel-ratio:0){@font-face{font-family:"Flaticon";src:url("../fonts/Flaticon.svg#Flaticon") format("svg");}
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after{font-family:Flaticon;font-size:36px;font-style:normal;}
+.wt-icon-box-xl [class^="flaticon-"]:before, .wt-icon-box-xl [class*=" flaticon-"]:before,
+.wt-icon-box-xl [class^="flaticon-"]:after, .wt-icon-box-xl [class*=" flaticon-"]:after{font-size:96px;}
+.wt-icon-box-lg [class^="flaticon-"]:before, .wt-icon-box-lg [class*=" flaticon-"]:before,
+.wt-icon-box-lg [class^="flaticon-"]:after, .wt-icon-box-lg [class*=" flaticon-"]:after{font-size:72px;}
+.wt-icon-box-md [class^="flaticon-"]:before, .wt-icon-box-md [class*=" flaticon-"]:before,
+.wt-icon-box-md [class^="flaticon-"]:after, .wt-icon-box-md [class*=" flaticon-"]:after{font-size:48px;}
+.wt-icon-box-sm [class^="flaticon-"]:before, .wt-icon-box-sm [class*=" flaticon-"]:before,
+.wt-icon-box-sm [class^="flaticon-"]:after, .wt-icon-box-sm [class*=" flaticon-"]:after{font-size:36px;}
+.wt-icon-box-xs [class^="flaticon-"]:before, .wt-icon-box-xs [class*=" flaticon-"]:before,
+.wt-icon-box-xs [class^="flaticon-"]:after, .wt-icon-box-xs [class*=" flaticon-"]:after{font-size:24px;}
+.flaticon-envelope:before{content:"\f100";}
+.flaticon-smartphone:before{content:"\f101";}
+.flaticon-placeholder:before{content:"\f102";}
+.flaticon-spa:before{content:"\f103";}
+.flaticon-lipstick:before{content:"\f104";}
+.flaticon-hair-dye:before{content:"\f105";}
+.flaticon-combs:before{content:"\f106";}
+.flaticon-cream:before{content:"\f107";}
+.flaticon-eye-shadow:before{content:"\f108";}
+.flaticon-eyelashes:before{content:"\f109";}
+.flaticon-eye:before{content:"\f10a";}
+.flaticon-hair-dryer:before{content:"\f10b";}
+.flaticon-deodorant:before{content:"\f10c";}
+.flaticon-curling:before{content:"\f10d";}
+.flaticon-cosmetics:before{content:"\f10e";}
+.flaticon-brushes:before{content:"\f10f";}
+.flaticon-bronzer:before{content:"\f110";}
+.flaticon-blush:before{content:"\f111";}
+.flaticon-bath-salt-bomb:before{content:"\f112";}
+.flaticon-happy:before{content:"\f113";}
+.flaticon-lotion:before{content:"\f114";}
+.flaticon-mascara:before{content:"\f115";}
+.flaticon-mirror:before{content:"\f116";}
+.flaticon-people:before{content:"\f117";}
+.flaticon-team:before{content:"\f118";}
+.flaticon-trophy:before{content:"\f119";}
+.flaticon-spray-bottle:before{content:"\f11a";}
+.flaticon-wipes:before{content:"\f11b";}
+.flaticon-hair-straightener:before{content:"\f11c";}
+.flaticon-soap:before{content:"\f11d";}
+.flaticon-gel:before{content:"\f11e";}
+.flaticon-shaving:before{content:"\f11f";}
+.flaticon-serum:before{content:"\f120";}
+.flaticon-scissors:before{content:"\f121";}
+.flaticon-powder:before{content:"\f122";}
+.flaticon-potions:before{content:"\f123";}
+.flaticon-perfume:before{content:"\f124";}
+.flaticon-nail-polish:before{content:"\f125";}
+.flaticon-nail:before{content:"\f126";}
+.flaticon-female-hairs:before{content:"\f127";}
