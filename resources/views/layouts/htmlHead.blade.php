@@ -25,7 +25,7 @@
 
 <!--[if lt IE 9]>
 <script src="/js/html5shiv.min.js"></script>
-<script src=". /js/respond.min.js"></script>
+<script src="/js/respond.min.js"></script>
 <![endif]-->
 
 
@@ -50,15 +50,15 @@
 <!-- THEME COLOR CHANGE STYLE SHEET -->
 <link rel="stylesheet" class="skin" type="text/css" href="/css/skin/skin-1.css">
 <!-- CUSTOM  STYLE SHEET -->
-<link rel="stylesheet" type="text/css" href="/css/custom.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
 
 <!-- REVOLUTION SLIDER CSS -->
-<link rel="stylesheet" type="text/css" href="css/settings.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/settings.css') }}">
 <!-- REVOLUTION NAVIGATION STYLE -->
-<link rel="stylesheet" type="text/css" href="css/navigation.css">
-<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('css/navigation.css') }}">
+<script type="text/javascript" src="{{ asset('js/jquery-1.12.4.min.js') }}"></script>
 <!-- JQUERY.MIN JS -->
 
 <!-- GOOGLE FONTS -->
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,30,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,800italic,800,700italic' rel='stylesheet' type='text/css'>

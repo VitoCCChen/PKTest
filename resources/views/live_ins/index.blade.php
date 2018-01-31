@@ -39,25 +39,12 @@
                 <div class="comments-area" id="comments">
                     <div class="p-b30">
                         <h4><i class="fa fa-comments-o" aria-hidden="true"></i>聊天室</h4>
-                        <ol class="comment-list" id="chatListBlock" style="height:400px;">
-
-                            <!--
-                            <li class="comment">
-                                <div class="comment-body">
-                                    <div class="comment-author vcard">
-                                        <img class="avatar photo" src="images/gallery/pic9.jpg" alt="">
-                                        <cite class="fn">林大偉</cite>
-                                    </div>
-                                    <div class="comment-meta">07:15:18</div>
-                                    <p>我元助你囉!!</p>
-                                </div>
-                            </li>
-                            -->
+                        <ol id="messages" class="comment-list" id="chatListBlock" style="height:400px;">
 
                         </ol>
                         <div class="reply">
                             <input type="text" id="chatInput" disabled placeholder="請輸入留言">
-                            <button id="chatSubmitButton" style="display:none;">留言</button>
+                            <button id="m" style="display:none;">留言</button>
                             <button class="m-b15 graphical  btn-primary blue  m-r5" id="chatLoginButton"  onClick="logInWithFacebook()" type="button" style="padding:0;margin:0;">
                                 <span class="site-button-inr"><i class="fa fa-facebook"></i>
                                     <span style="padding:10px 5px;line-height:40px;text-align:left;">請先登入</span>
@@ -107,9 +94,140 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+    <script>
+        $(function () {
+            var name = 'CCC';
+            var room = '1-1';
+
+            /*do {
+                name = prompt("請問您叫什麼名子", "");
+            }while(name == null || name == "");
+
+
+            room = prompt("room?", "");
+            room = '1-'+room;
+            document.title = "Socket.IO chat room "+ room;*/
+
+
+
+            var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name='+name});
+            socket.emit('create', room);
+
+            <!--region client send event to server-->
+            //send message
+            $('#send').click(function(){
+                /*if($('#s').val() != "" && $('#m').val() != "")
+                {
+                    socket.emit('secret message', name, $('#s').val(), $('#m').val());
+                    $('#m').val('');
+                    return false;
+                }*/
+
+                if($('#m').val() != "")
+                {
+                    socket.emit('chat message', name, $('#m').val());
+                }
+                else
+                    alert("請輸入點東西");
+
+                $('#m').val('');
+                return false;
+            });
+
+            //let user could clear the message board
+            $('#clear').click(function(){
+                $('#messages').text("");
+                return false;
+            });
+
+            //let user send message with enter
+            $('#m').on('keypress',function(e){
+                if (e.which == 13){
+                    console.log("enter is press by "+name);
+                    $('#send').trigger('click');
+                    return false;
+                }
+            });//*/
+
+            //listen on how is typing, and show on clint console
+            /*$('#m').on('keyup', function(){
+                socket.emit('typing', name);
+                $('#messages').append($('<li>').text('someone is typing'));
+                return false;
+            });//*/
+            <!--endregion-->
+
+
+            <!--region client listen event from server-->
+            //listen any connection into same room
+            socket.on('connected'+room, function(msg){
+                $('#messages').append($('<li>').text(msg));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            //[try]ask user to a nickname
+            /*socket.on('changename', function(username){
+                do {
+                    name = prompt(username + " has been used, please change a name :)");
+                }while(name == null || name == "");
+
+                socket = io.connect('', {query: 'name='+name});
+            });*/
+
+            //listen any message for client
+            socket.on('chat message'+room, function(name, msg){
+                $('#messages').append($('<li>').text(name+": "+msg));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            //[try] to listen who is typing
+            socket.on('whoistyping', function(name){
+                console.log(name + " is typing...");
+            });
+
+            //listen any disconnection in same room
+            socket.on('disconnected'+room, function(msg){
+                $('#messages').append($('<li>').text(msg));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            //get history messages and show it
+            socket.on('load history'+room, function(history){
+
+                history.msg.forEach(
+                    function(value){
+                        msg = value.cl_record;
+                        //$('#messages').prepend($('<li>').text(msg));
+                        $('#messages').append($('<li>').text(value.cl_record));
+                        window.scrollTo(0, document.body.scrollHeight);//*/
+
+                    });
+
+                //told cerver losding history done
+                socket.emit('welcome', name);
+
+                //console.log("history-> ", history);
+                //console.log('history done');
+            });
+
+            //get room info
+            socket.on('update roomInfo'+room, function(info){
+                //$('#r').val(info);
+
+                console.log(info);
+            });
+            <!--endregion-->
+
+        });
+    </script>
 @stop
 
 @section('scriptArea_2')
+    <script type="text/javascript" src="/js/axios.min.js"></script>
+
     <script>
         var fb_name = "",
             fb_picture = "",
@@ -180,7 +298,7 @@
 
         var getLoginSession = function(token){
             //console.log("getLoginSession", token);
-            $.post("http://www.pkfun.xyz/PKFunAPI/api/login/facebook",{
+            $.post("http://www.pkfun.xyz/api/login",{
                     accesstoken: token
                 },
                 function(data, status){
@@ -233,7 +351,7 @@
 
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.post("http://www.pkfun.xyz/PKFunAPI/api/logout/facebook",{
+                $.post("http://api.pkfun.xyz/api/logout/",{
                         //accesstoken: token
                     },
                     function(data,status){

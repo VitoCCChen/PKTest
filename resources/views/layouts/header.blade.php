@@ -61,7 +61,7 @@
                         </li>
 
                         <li class="">
-                            <a href="/live">直播節目</a>
+                            <a href="live">直播節目</a>
                         </li>
                     </ul>
                 </div>
