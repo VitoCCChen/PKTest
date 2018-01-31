@@ -1401,7 +1401,7 @@
 
         var getLoginSession = function(token){
             //console.log("getLoginSession", token);
-            $.post("/api/login.php",{
+            $.post("http://www.pkfun.xyz/PKFunAPI/api/login/facebook",{
                     accesstoken: token
                 },
                 function(data, status){
@@ -1446,7 +1446,7 @@
 
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.post("/api/logout.php",{
+                $.post("http://www.pkfun.xyz/PKFunAPI/api/logout/facebook",{
                         //accesstoken: token
                     },
                     function(data,status){

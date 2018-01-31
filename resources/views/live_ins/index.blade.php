@@ -2,103 +2,99 @@
 
 @section('content')
     <!-- SECTION CONTENT START -->
-        <div class="section-full p-t50 p-b50 clearfix">
-            <div class="container_live">
+    <div class="section-full p-t50 p-b50 clearfix">
+        <div class="container_live">
 
-                <!-- BLOG START -->
-                <div class="col-md-9 blog-post date-style-1 blog-detail">
+            <!-- BLOG START -->
+            <div class="col-md-9 blog-post date-style-1 blog-detail">
 
-                    <div class="fb-video" data-href="{{ $data->pgram_url }}" data-show-text="false">
+                <div class="fb-video" data-href="{{ $data->pgram_url }}" data-show-text="false">
 
-                        <div class="fb-xfbml-parse-ignore">
-                            <blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/">
-                                <a href="https://www.facebook.com/facebook/videos/10153231379946729/">最優質的線上直播節目...</a>
-                                <p>最優質的線上直播節目</p>
-                                Posted by <a href="https://www.facebook.com/facebook/">Facebook</a> on Friday, December 5, 2014
-                            </blockquote>
-                        </div>
-                    </div>
-                    <div class="wt-post-meta ">
-                        <ul>
-                            <li class="post-date">{{ $data->ep_start_time }}</li>
-                        </ul>
-                    </div>
-                    <div class="wt-post-title ">
-                        <h3 class="post-title"><a href="javascript:void(0);">{{ $data->pgram_description }}</a></h3>
-                    </div>
-
-                    <div class="wt-post-tags p-b20">
-                        <div class="post-tags">
-                            @foreach($data->ep_anchors as $anchor)
-                                <a href="javascript:void(0);">{{  $anchor->name }}</a>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="wt-post-text">
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                            specimen book.</p>
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/facebook/videos/10153231379946729/">
+                        </blockquote>
                     </div>
                 </div>
-                <div class="col-md-3" id="comment-list">
-                    <div class="comments-area" id="comments">
-                        <div class="p-b30">
-                            <h4><i class="fa fa-comments-o" aria-hidden="true"></i>聊天室</h4>
-                            <ol class="comment-list" id="chatListBlock" style="height:400px;">
+                <div class="wt-post-meta ">
+                    <ul>
+                        <li class="post-date">{{ $data->ep_start_time }}</li>
+                    </ul>
+                </div>
+                <div class="wt-post-title ">
+                    <h3 class="post-title"><a href="javascript:void(0);">{{ $data->pgram_name.'-'.$data->ep_id }}</a></h3>
+                </div>
 
-                                <!--
-                                <li class="comment">
-                                    <div class="comment-body">
-                                        <div class="comment-author vcard">
-                                            <img class="avatar photo" src="images/gallery/pic9.jpg" alt="">
-                                            <cite class="fn">林大偉</cite>
-                                        </div>
-                                        <div class="comment-meta">07:15:18</div>
-                                        <p>我元助你囉!!</p>
+                <div class="wt-post-tags p-b20">
+                    <div class="post-tags">
+                        @foreach($data->ep_anchors as $anchor)
+                            <a href="javascript:void(0);">{{  $anchor->name }}</a>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="wt-post-text">
+                    <p>{{ $data->pgram_description }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" id="comment-list">
+                <div class="comments-area" id="comments">
+                    <div class="p-b30">
+                        <h4><i class="fa fa-comments-o" aria-hidden="true"></i>聊天室</h4>
+                        <ol class="comment-list" id="chatListBlock" style="height:400px;">
+
+                            <!--
+                            <li class="comment">
+                                <div class="comment-body">
+                                    <div class="comment-author vcard">
+                                        <img class="avatar photo" src="images/gallery/pic9.jpg" alt="">
+                                        <cite class="fn">林大偉</cite>
                                     </div>
-                                </li>
-                                -->
+                                    <div class="comment-meta">07:15:18</div>
+                                    <p>我元助你囉!!</p>
+                                </div>
+                            </li>
+                            -->
 
-                            </ol>
-                            <div class="reply">
-                                <input type="text" id="chatInput" disabled placeholder="請輸入留言">
-                                <button id="chatSubmitButton" style="display:none;">留言</button>
-                                <button class="m-b15 graphical  btn-primary blue  m-r5" id="chatLoginButton"  onClick="logInWithFacebook()" type="button" style="padding:0;margin:0;">
+                        </ol>
+                        <div class="reply">
+                            <input type="text" id="chatInput" disabled placeholder="請輸入留言">
+                            <button id="chatSubmitButton" style="display:none;">留言</button>
+                            <button class="m-b15 graphical  btn-primary blue  m-r5" id="chatLoginButton"  onClick="logInWithFacebook()" type="button" style="padding:0;margin:0;">
                                 <span class="site-button-inr"><i class="fa fa-facebook"></i>
                                     <span style="padding:10px 5px;line-height:40px;text-align:left;">請先登入</span>
                                 </span>
-                                </button>
+                            </button>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div id="contributeForm" class="pointBox clearfix">
-                        <div class="form long">
-                            <label>元助主播:</label>
-                            <select name="anchor" >
-                                <option value="1">多朵</option>
-                                <option value="2">朱兒</option>
-                                <option value="3">若嵐</option>
-                                <option value="4">張螞蟻</option>
-                            </select>
-                        </div>
-                        <div class="form long">
-                            <label>贈送元助點數:</label><input type="text" placeholder="請輸入點數" name="point">
-                        </div>
-                        <div class="form long">
-                            <label>給她一句鼓勵的話:</label><input type="text" placeholder="" name="content">
-                        </div>
-
-                        <div class="wt-box">
-                            <button type="submit" value="submit" id="contributeButton" class="site-button m-r5" style="margin: 10px 0; border-radius: 5px;">元助</button>
                         </div>
                     </div>
                 </div>
-                <!-- BLOG END -->
+                <div id="contributeForm" class="pointBox clearfix">
+                    <div class="form long">
+                        <label>元助主播:</label>
+                        <select name="anchor" >
+                            <option value="1">多朵</option>
+                            <option value="2">朱兒</option>
+                            <option value="3">若嵐</option>
+                            <option value="4">張螞蟻</option>
+                        </select>
+                    </div>
+                    <div class="form long">
+                        <label>贈送元助點數:</label><input type="text" placeholder="請輸入點數" name="point">
+                    </div>
+                    <div class="form long">
+                        <label>給她一句鼓勵的話:</label><input type="text" placeholder="" name="content">
+                    </div>
 
+                    <div class="wt-box">
+                        <button type="submit" value="submit" id="contributeButton" class="site-button m-r5" style="margin: 10px 0; border-radius: 5px;">元助</button>
+                    </div>
+                </div>
             </div>
+            <!-- BLOG END -->
+
         </div>
-        <!-- SECTION CONTENT END -->
-    @stop
+    </div>
+    <!-- SECTION CONTENT END -->
+@stop
 
 @section('scriptArea_1')
     <script>
@@ -184,7 +180,7 @@
 
         var getLoginSession = function(token){
             //console.log("getLoginSession", token);
-            $.post("/api/login.php",{
+            $.post("http://www.pkfun.xyz/PKFunAPI/api/login/facebook",{
                     accesstoken: token
                 },
                 function(data, status){
@@ -237,7 +233,7 @@
 
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.post("/api/logout.php",{
+                $.post("http://www.pkfun.xyz/PKFunAPI/api/logout/facebook",{
                         //accesstoken: token
                     },
                     function(data,status){
