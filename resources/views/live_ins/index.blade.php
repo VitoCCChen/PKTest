@@ -222,17 +222,18 @@
                         // $("#chatListBlock").scrollBottom();
 
                         var nowDate = new Date(value.cl_creatdate);
-                        console.log(nowDate)
                         var chatCommentDate = nowDate.getFullYear() + "/" + (nowDate.getMonth()+1) + "/" + nowDate.getDate() + " " + nowDate.getHours() + ":" + nowDate.getMinutes() + ":" + nowDate.getSeconds();
+
+                        var subStr = value.cl_record.split(':');
 
                         var chatContent =   "<li class='comment'>" +
                             "<div class='comment-body'>" +
                             "<div class='comment-author vcard'>" +
                             "<img class='avatar photo' src='" + value.url_photo + "' alt=''>" +
-                            "<cite class='fn'>" + name + "</cite>" +
+                            "<cite class='fn'>" + subStr[0] + "</cite>" +
                             "</div>" +
                             "<div class=\"comment-meta\">" + chatCommentDate + "</div>" +
-                            "<p>"+ value.cl_record +"</p>" +
+                            "<p>"+ subStr[1] +"</p>" +
                             "</div></li>";
 
                         if(msg && 0 != msg.length ) {

@@ -1369,7 +1369,12 @@
                 console.log(pid, amount);
 
 
-                $.get("/api/GetAuthCode.php?ProductName=" + pid +"&Currency=TWD&Amount=" + amount + "&agent_id=" + agent_id,function(data, status) {
+                $.post("http://api.pkfun.xyz/api/mycard/getAuthCode",{
+                    "ProductName": pid,
+                    "Currency":"TWD",
+                    "Amount": amount,
+                    "agent_id": agent_id
+                },function(data, status) {
                     if(data.success) {
                         window.location.href = data.result;
                         return false;

@@ -3,14 +3,25 @@
     <div class="blog-post blog-grid date-style-3 live_list">
         <div class="wt-post-media wt-img-effect zoom-slow">
             <a href="live_ins/{{$result_ep->ep_id}}"><img src="/img/gallery/{{$result_ep->pgram_thumbnail}}" alt=""></a>
-        </div>
+    </div>
         <div class="wt-post-info p-tb30 p-m30">
             <div class="wt-post-title ">
                 <h3 class="post-title"><a href="live_ins/{{$result_ep->ep_id}}">{{ $result_ep->pgram_name.'-'.$result_ep->ep_id }}</a></h3>
             </div>
             <div class="wt-post-meta ">
                 <ul>
-                    <li class="post-date"> <i class="fa fa-television" aria-hidden="true"></i><strong>10 Aug</strong> <span> 2016</span> </li>
+                    <li class="post-date"> <i class="fa fa-television" aria-hidden="true"></i>
+                        <strong>
+                            <?php
+                            $date = date_create($result_ep->ep_start_time);
+
+                            echo date_format($date, 'd F');
+                            ?>
+                        </strong>
+                        <span>
+                            {{ date_format($date, 'Y') }}
+                        </span>
+                    </li>
                 </ul>
             </div>
             <div class="wt-post-text">

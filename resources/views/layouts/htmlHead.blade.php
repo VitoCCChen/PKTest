@@ -48,6 +48,8 @@
 <!-- MAIN STYLE SHEET -->
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <!-- THEME COLOR CHANGE STYLE SHEET -->
+
+
 <link rel="stylesheet" class="skin" type="text/css" href="/css/skin/skin-1.css">
 <!-- CUSTOM  STYLE SHEET -->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
