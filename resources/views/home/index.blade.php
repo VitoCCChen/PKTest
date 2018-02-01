@@ -1401,7 +1401,7 @@
 
         var getLoginSession = function(token){
             //console.log("getLoginSession", token);
-            $.post("http://www.pkfun.xyz/PKFunAPI/api/login/facebook",{
+            $.post("http://api.pkfun.xyz/api/login/facebook",{
                     accesstoken: token
                 },
                 function(data, status){
@@ -1446,7 +1446,7 @@
 
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.post("http://www.pkfun.xyz/PKFunAPI/api/logout/facebook",{
+                $.get("http://api.pkfun.xyz/api/logout",{
                         //accesstoken: token
                     },
                     function(data,status){
@@ -1461,7 +1461,7 @@
         // 同步Facebook
         window.fbAsyncInit = function() {
             FB.init({
-                appId: '401417810290014',
+                appId: '450483541741065',
                 cookie: true, // This is important, it's not enabled by default
                 version: 'v2.10'
             });

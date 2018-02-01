@@ -39,12 +39,12 @@
                 <div class="comments-area" id="comments">
                     <div class="p-b30">
                         <h4><i class="fa fa-comments-o" aria-hidden="true"></i>聊天室</h4>
-                        <ol id="messages" class="comment-list" id="chatListBlock" style="height:400px;">
+                        <ol id="chatListBlock" class="comment-list" id="chatListBlock" style="height:400px;">
 
                         </ol>
                         <div class="reply">
                             <input type="text" id="chatInput" disabled placeholder="請輸入留言">
-                            <button id="m" style="display:none;">留言</button>
+                            <button id="chatSubmitButton" style="display:none;">留言</button>
                             <button class="m-b15 graphical  btn-primary blue  m-r5" id="chatLoginButton"  onClick="logInWithFacebook()" type="button" style="padding:0;margin:0;">
                                 <span class="site-button-inr"><i class="fa fa-facebook"></i>
                                     <span style="padding:10px 5px;line-height:40px;text-align:left;">請先登入</span>
@@ -90,7 +90,7 @@
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.11&appId=401417810290014';
+            js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.11&appId=450483541741065';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
@@ -100,126 +100,7 @@
     <script>
         $(function () {
             var name = 'CCC';
-            var room = '1-1';
 
-            /*do {
-                name = prompt("請問您叫什麼名子", "");
-            }while(name == null || name == "");
-
-
-            room = prompt("room?", "");
-            room = '1-'+room;
-            document.title = "Socket.IO chat room "+ room;*/
-
-
-
-            var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name='+name});
-            socket.emit('create', room);
-
-            <!--region client send event to server-->
-            //send message
-            $('#send').click(function(){
-                /*if($('#s').val() != "" && $('#m').val() != "")
-                {
-                    socket.emit('secret message', name, $('#s').val(), $('#m').val());
-                    $('#m').val('');
-                    return false;
-                }*/
-
-                if($('#m').val() != "")
-                {
-                    socket.emit('chat message', name, $('#m').val());
-                }
-                else
-                    alert("請輸入點東西");
-
-                $('#m').val('');
-                return false;
-            });
-
-            //let user could clear the message board
-            $('#clear').click(function(){
-                $('#messages').text("");
-                return false;
-            });
-
-            //let user send message with enter
-            $('#m').on('keypress',function(e){
-                if (e.which == 13){
-                    console.log("enter is press by "+name);
-                    $('#send').trigger('click');
-                    return false;
-                }
-            });//*/
-
-            //listen on how is typing, and show on clint console
-            /*$('#m').on('keyup', function(){
-                socket.emit('typing', name);
-                $('#messages').append($('<li>').text('someone is typing'));
-                return false;
-            });//*/
-            <!--endregion-->
-
-
-            <!--region client listen event from server-->
-            //listen any connection into same room
-            socket.on('connected'+room, function(msg){
-                $('#messages').append($('<li>').text(msg));
-                window.scrollTo(0, document.body.scrollHeight);
-            });
-
-            //[try]ask user to a nickname
-            /*socket.on('changename', function(username){
-                do {
-                    name = prompt(username + " has been used, please change a name :)");
-                }while(name == null || name == "");
-
-                socket = io.connect('', {query: 'name='+name});
-            });*/
-
-            //listen any message for client
-            socket.on('chat message'+room, function(name, msg){
-                $('#messages').append($('<li>').text(name+": "+msg));
-                window.scrollTo(0, document.body.scrollHeight);
-            });
-
-            //[try] to listen who is typing
-            socket.on('whoistyping', function(name){
-                console.log(name + " is typing...");
-            });
-
-            //listen any disconnection in same room
-            socket.on('disconnected'+room, function(msg){
-                $('#messages').append($('<li>').text(msg));
-                window.scrollTo(0, document.body.scrollHeight);
-            });
-
-            //get history messages and show it
-            socket.on('load history'+room, function(history){
-
-                history.msg.forEach(
-                    function(value){
-                        msg = value.cl_record;
-                        //$('#messages').prepend($('<li>').text(msg));
-                        $('#messages').append($('<li>').text(value.cl_record));
-                        window.scrollTo(0, document.body.scrollHeight);//*/
-
-                    });
-
-                //told cerver losding history done
-                socket.emit('welcome', name);
-
-                //console.log("history-> ", history);
-                //console.log('history done');
-            });
-
-            //get room info
-            socket.on('update roomInfo'+room, function(info){
-                //$('#r').val(info);
-
-                console.log(info);
-            });
-            <!--endregion-->
 
         });
     </script>
@@ -231,9 +112,13 @@
     <script>
         var fb_name = "",
             fb_picture = "",
-            fb_userid = "";
+            userid = "";
 
+        //start websocket
+        var room = '{{ $data->pgram_id.'-'.$data->ep_id }}';
 
+        var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name=someone'});
+        socket.emit('create', room);
 
         $(document).ready(function(){
 
@@ -242,33 +127,18 @@
                 return $(document).height() - this.scrollTop() - this.height();
             };
 
-            var submitChatMessage = function(chatComment){
-                console.log(fb_name, fb_picture, fb_userid);
-                var dd = new Date();
-                var chatCommentDate = dd.getFullYear() + "/" + (dd.getMonth()+1) + "/" + dd.getDay() + " " + dd.getHours() + ":" + dd.getMinutes() + ":" + dd.getSeconds();
-
-
-                var chatContent =   "<li class='comment'>" +
-                    "<div class='comment-body'>" +
-                    "<div class='comment-author vcard'>" +
-                    "<img class='avatar photo' src='" + fb_picture + "' alt=''>" +
-                    "<cite class='fn'>" + fb_name + "</cite>" +
-                    "</div>" +
-                    "<div class=\"comment-meta\">" + chatCommentDate + "</div>" +
-                    "<p>"+ chatComment +"</p>" +
-                    "</div></li>";
-
-                if(chatComment && 0 != chatComment.length ) {
-
-                    $("#chatListBlock").prepend(chatContent);
-                    $("#chatInput").val("");
-                    $("#chatListBlock").scrollBottom();
-                };
-            };
-
             $("#chatSubmitButton").on("click",function(){
-                var chatComment = $("#chatInput").val().trim() ? $("#chatInput").val() : "";
-                submitChatMessage(chatComment);
+                if($("#chatInput").val().trim())
+                {
+                    socket.emit('chat message', fb_name, userid, $('#chatInput').val(), fb_picture);
+                    $("#chatInput").val("");
+                    //submitChatMessage($('#chatInput').val());
+                }
+                else
+                    alert("請輸入點東西");
+
+                //var chatComment = $("#chatInput").val().trim() ? $("#chatInput").val() : "";
+                //submitChatMessage(chatComment);
             });
 
             $("#contributeButton").click(function(){
@@ -292,17 +162,109 @@
                 }else{
                     alert("請先登入");
                 }
+            });
+
+            <!--region client send event to server-->
+
+            //let user send message with enter
+            $('#chatInput').on('keypress',function(e){
+                if (e.which == 13){
+                    console.log("enter is press by "+fb_name);
+                    $('#chatSubmitButton').trigger('click');
+                    return false;
+                }
+            });//*/
+
+            <!--endregion-->
+
+
+            <!--region client listen event from server-->
+
+            //listen any message for client
+            socket.on('chat message'+room, function(name, msg, pic){
+                var dd = new Date();
+                console.log(dd);
+                var chatCommentDate = dd.getFullYear() + "/" + (dd.getMonth()+1) + "/" + dd.getDate() + " " + dd.getHours() + ":" + dd.getMinutes() + ":" + dd.getSeconds();
+
+                var chatContent =   "<li class='comment'>" +
+                    "<div class='comment-body'>" +
+                    "<div class='comment-author vcard'>" +
+                    "<img class='avatar photo' src='" + pic + "' alt=''>" +
+                    "<cite class='fn'>" + name + "</cite>" +
+                    "</div>" +
+                    "<div class=\"comment-meta\">" + chatCommentDate + "</div>" +
+                    "<p>"+ msg +"</p>" +
+                    "</div></li>";
+
+                if(msg && 0 != msg.length ) {
+
+                    $("#chatListBlock").append(chatContent);
+                    //$("#chatListBlock").scrollBottom();
+                    $("#chatListBlock").scrollTop(9999999);
+                };
 
             });
+
+            //listen any disconnection in same room
+            socket.on('disconnected'+room, function(msg){
+                $('#chatListBlock').append($('<li>').text(msg));
+                $("#chatListBlock").scrollBottom();
+            });
+
+            //get history messages and show it
+            socket.on('load history'+room, function(history){
+                history.msg.forEach(
+                    function(value){
+                        //console.log(typeof(value), value);
+                        var msg = value.cl_record;
+                        //$('#chatListBlock').prepend($('<li>').text(msg));
+                        // $('#chatListBlock').append($('<li>').text(value.cl_record));
+                        // $("#chatListBlock").scrollBottom();
+
+                        var nowDate = new Date(value.cl_creatdate);
+                        console.log(nowDate)
+                        var chatCommentDate = nowDate.getFullYear() + "/" + (nowDate.getMonth()+1) + "/" + nowDate.getDate() + " " + nowDate.getHours() + ":" + nowDate.getMinutes() + ":" + nowDate.getSeconds();
+
+                        var chatContent =   "<li class='comment'>" +
+                            "<div class='comment-body'>" +
+                            "<div class='comment-author vcard'>" +
+                            "<img class='avatar photo' src='" + value.url_photo + "' alt=''>" +
+                            "<cite class='fn'>" + name + "</cite>" +
+                            "</div>" +
+                            "<div class=\"comment-meta\">" + chatCommentDate + "</div>" +
+                            "<p>"+ value.cl_record +"</p>" +
+                            "</div></li>";
+
+                        if(msg && 0 != msg.length ) {
+                            $("#chatListBlock").append(chatContent);
+                            //$("#chatListBlock").scrollBottom();
+                            $("#chatListBlock").scrollTop(9999999);
+                        };
+                    });
+
+                //told cerver losding history done
+                socket.emit('welcome', fb_name);
+            });
+
+            //get room info
+            socket.on('update roomInfo'+room, function(info){
+                //$('#r').val(info);
+
+                console.log(info);
+            });
+            <!--endregion-->
         });
 
         var getLoginSession = function(token){
             //console.log("getLoginSession", token);
-            $.post("http://www.pkfun.xyz/api/login",{
+            $.post("http://api.pkfun.xyz/api/login/facebook",{
                     accesstoken: token
                 },
                 function(data, status){
                     console.log("login success", data);
+                    //var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name='+fb_name});
+                    userid = data.result[0].member_id;
+                    socket.emit('login', fb_name, userid);
                 });
         };
 
@@ -311,8 +273,6 @@
             if (response.authResponse) {
                 FB.api('/me/?fields=picture,name', function(me) {
                     document.getElementById("nameBlock").innerHTML = me.name;
-
-
 
                     console.log('FB.me', me);
 
@@ -351,7 +311,7 @@
 
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.post("http://api.pkfun.xyz/api/logout/",{
+                $.get("http://api.pkfun.xyz/api/logout/",{
                         //accesstoken: token
                     },
                     function(data,status){
@@ -366,7 +326,7 @@
         // 同步Facebook
         window.fbAsyncInit = function() {
             FB.init({
-                appId: '401417810290014',
+                appId: '450483541741065',
                 cookie: true, // This is important, it's not enabled by default
                 version: 'v2.10'
             });
@@ -389,6 +349,8 @@
 
         };
 
+
+
     </script>
 
 
@@ -399,7 +361,7 @@
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.11&appId=401417810290014';
+            js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.11&appId=450483541741065';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
