@@ -7805,6 +7805,20 @@ Version: 1.0
         height: 60px;
         overflow: hidden;
     }
+
+    .fish-text-overflow {
+        width:100%;
+        max-width:500px;
+        line-height:1.5;
+        margin:1em 0;
+        text-align:justify;
+        padding:5px;
+        display: -webkit-box;
+        overflow:hidden;
+        text-overflow : ellipsis;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
     
     .wt-post-text p:last-child {
         margin: 0;

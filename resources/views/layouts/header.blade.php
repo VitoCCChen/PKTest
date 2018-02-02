@@ -1,4 +1,4 @@
-
+test in local
 <header class="site-header header-style-1 ">
     <div class="top-bar">
         <div class="container">
@@ -13,9 +13,6 @@
                 -->
                 <div class="wt-topbar-right clearfix">
                     <ul class="list-unstyled e-p-bx pull-right">
-
-                        <li><i class="fa fa-envelope"></i>mail@xxx.com</li>
-
                         <li>
                             <button id="loginButton" class="m-b15 graphical  btn-primary blue  m-r5" onClick="logInWithFacebook()" type="button" style="display:none;padding:0;margin:0;border:0;">
                                         <span class="site-button-inr">
@@ -61,7 +58,7 @@
                         </li>
 
                         <li class="">
-                            <a href="live">直播節目</a>
+                            <a href="{{ route('live') }}">直播節目</a>
                         </li>
                     </ul>
                 </div>

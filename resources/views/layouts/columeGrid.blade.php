@@ -24,7 +24,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="wt-post-text">
+            <div class="fish-text-overflow">
                 {{ $result_ep->pgram_description }}
             </div>
             <div class="wt-post-readmore">
@@ -41,3 +41,4 @@
     </div>
 </div>
 @endforeach
+

@@ -10,10 +10,11 @@ class liveController extends Controller
 {
     public function index(Request $request)
     {
+	$apiUrl = 'http://api.pkfun.xyz/api';
         $curl_ep = new Curl();
         $curl_ep->setHeader('X-Requested-With', 'XMLHttpRequest');
         $curl_ep->setHeader('Content-Type', 'application/json');
-        $curl_ep->get('http://pkfunapi.test/api/getEpisode', array(
+        $curl_ep->get($apiUrl.'/getEpisode', array(
             'page_num'=>'6',
             'page'=>$request['page'],
             'id'=>$request['id']
@@ -22,7 +23,7 @@ class liveController extends Controller
         $curl_pg = new Curl();
         $curl_pg->setHeader('X-Requested-With', 'XMLHttpRequest');
         $curl_pg->setHeader('Content-Type', 'application/json');
-        $curl_pg->get('http://pkfunapi.test/api/getProgram', array(
+        $curl_pg->get($apiUrl.'/getProgram', array(
             'id'=>$request['id']
         ));
 

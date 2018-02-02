@@ -20,7 +20,7 @@
                     <ul>
                         <li class="post-author">
                             <?php
-                                $date = date_create($results_ep->result->data[$i]->ep_start_time);
+                                $date = date_create($results_ep->result->data[$i]->ep_createtime);
 
                                 echo date_format($date, 'Y-m-d');
                             ?>

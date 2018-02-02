@@ -47,7 +47,7 @@
                             <button id="chatSubmitButton" style="display:none;">留言</button>
                             <button class="m-b15 graphical  btn-primary blue  m-r5" id="chatLoginButton"  onClick="logInWithFacebook()" type="button" style="padding:0;margin:0;">
                                 <span class="site-button-inr"><i class="fa fa-facebook"></i>
-                                    <span style="padding:10px 5px;line-height:40px;text-align:left;">請先登入</span>
+                                    <span style="padding:10px 5px;line-height:40px;text-align:left;">登入</span>
                                 </span>
                             </button>
 
@@ -117,7 +117,7 @@
         //start websocket
         var room = '{{ $data->pgram_id.'-'.$data->ep_id }}';
 
-        var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name=someone'});
+        var socket = io.connect('ws.pkfun.xyz:9501', {query: 'name=someone&room='+room});
         socket.emit('create', room);
 
         $(document).ready(function(){
@@ -145,10 +145,10 @@
                 console.log(typeof(parseInt($("#contributeForm").find("[name='point']").val())), $("#contributeForm").find("[name='anchor']").val(), $("#contributeForm").find("[name='point']").val(), $("#contributeForm").find("[name='content']").val());
 
                 if(typeof(parseInt($("#contributeForm").find("[name='point']").val()))==="number" && parseInt($("#contributeForm").find("[name='point']").val()) > 0){
-                    $.post("/api/contribute.php",{
+                    $.post("http://api.pkfun.xyz/api/contribute",{
                             anchor_id: $("#contributeForm").find("[name='anchor']").val(),
                             point: $("#contributeForm").find("[name='point']").val(),
-                            content: $("#contributeForm").find("[name='content']").val()
+                            contents: $("#contributeForm").find("[name='content']").val()
                         },
                         function(data, status){
                             console.log("Success", data);
@@ -215,32 +215,24 @@
             socket.on('load history'+room, function(history){
                 history.msg.forEach(
                     function(value){
-                        //console.log(typeof(value), value);
-                        var msg = value.cl_record;
-                        //$('#chatListBlock').prepend($('<li>').text(msg));
-                        // $('#chatListBlock').append($('<li>').text(value.cl_record));
-                        // $("#chatListBlock").scrollBottom();
+                        var sender = value.cl_sender;
+                        var msg = value.cl_msg;
 
                         var nowDate = new Date(value.cl_creatdate);
                         var chatCommentDate = nowDate.getFullYear() + "/" + (nowDate.getMonth()+1) + "/" + nowDate.getDate() + " " + nowDate.getHours() + ":" + nowDate.getMinutes() + ":" + nowDate.getSeconds();
-
-                        var subStr = value.cl_record.split(':');
 
                         var chatContent =   "<li class='comment'>" +
                             "<div class='comment-body'>" +
                             "<div class='comment-author vcard'>" +
                             "<img class='avatar photo' src='" + value.url_photo + "' alt=''>" +
-                            "<cite class='fn'>" + subStr[0] + "</cite>" +
+                            "<cite class='fn'>" + sender + "</cite>" +
                             "</div>" +
                             "<div class=\"comment-meta\">" + chatCommentDate + "</div>" +
-                            "<p>"+ subStr[1] +"</p>" +
+                            "<p>"+ msg +"</p>" +
                             "</div></li>";
 
-                        if(msg && 0 != msg.length ) {
                             $("#chatListBlock").append(chatContent);
-                            //$("#chatListBlock").scrollBottom();
                             $("#chatListBlock").scrollTop(9999999);
-                        };
                     });
 
                 //told cerver losding history done
