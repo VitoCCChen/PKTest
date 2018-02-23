@@ -2,7 +2,7 @@
 <div class="post masonry-item col-lg-4 col-md-6 col-sm-6 col-xs-12">
     <div class="blog-post blog-grid date-style-3 live_list">
         <div class="wt-post-media wt-img-effect zoom-slow">
-            <a href="live_ins/{{$result_ep->ep_id}}"><img src="/img/gallery/{{$result_ep->pgram_thumbnail}}" alt=""></a>
+            <a href="live_ins/{{$result_ep->ep_id}}"><img src="http://cms.pkfun.xyz/Web_Manage/upload/admin/{{$result_ep->pgram_thumbnail}}" alt=""></a>
     </div>
         <div class="wt-post-info p-tb30 p-m30">
             <div class="wt-post-title ">

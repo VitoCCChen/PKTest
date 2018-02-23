@@ -65,10 +65,10 @@
                         </select>
                     </div>
                     <div class="form long">
-                        <label>贈送元助點數:</label><input type="text" placeholder="請輸入點數" name="point">
+                        <label>贈送元助點數:</label><input id="pointInput" type="text" placeholder="請輸入點數" name="point">
                     </div>
                     <div class="form long">
-                        <label>給她一句鼓勵的話:</label><input type="text" placeholder="" name="content">
+                        <label>給她一句鼓勵的話:</label><input id="cheerInput" type="text" placeholder="" name="content">
                     </div>
 
                     <div class="wt-box">
@@ -97,13 +97,7 @@
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
-    <script>
-        $(function () {
-            var name = 'CCC';
 
-
-        });
-    </script>
 @stop
 
 @section('scriptArea_2')
@@ -112,7 +106,8 @@
     <script>
         var fb_name = "",
             fb_picture = "",
-            userid = "";
+            userid = "",
+            userToken = "";
 
         //start websocket
         var room = '{{ $data->pgram_id.'-'.$data->ep_id }}';
@@ -142,25 +137,35 @@
             });
 
             $("#contributeButton").click(function(){
+
+
                 console.log(typeof(parseInt($("#contributeForm").find("[name='point']").val())), $("#contributeForm").find("[name='anchor']").val(), $("#contributeForm").find("[name='point']").val(), $("#contributeForm").find("[name='content']").val());
 
                 if(typeof(parseInt($("#contributeForm").find("[name='point']").val()))==="number" && parseInt($("#contributeForm").find("[name='point']").val()) > 0){
                     $.post("http://api.pkfun.xyz/api/contribute",{
+                            userToken: userToken,
                             anchor_id: $("#contributeForm").find("[name='anchor']").val(),
                             point: $("#contributeForm").find("[name='point']").val(),
                             contents: $("#contributeForm").find("[name='content']").val()
                         },
                         function(data, status){
-                            console.log("Success", data);
+                            console.log("resulte", data);
                             if(data.success) {
                                 alert("元助了 " + data.result.anc_name + " " + data.result.point + " 點成功，點數剩餘 " + data.result.member_point + "點。");
-                                submitChatMessage("元助了 " + data.result.anc_name + " " + data.result.anc_name + " " + data.result.point + " 點, " + data.result.content);
-                            }else{
-                                alert("元助了 " + data.result.anc_name + " " + data.result.point + " 點失敗 " + data.result.message+ " ，點數剩餘 " + data.result.member_point + "點。");
+                                submitChatMessage("元助了 " + data.result.anc_name + " " + data.result.point + " 點, " + data.result.content);
+                            }else if(data.code==4){
+                                alert("打賞失敗，請重試");
+                            }else if(data.code==2){
+                                alert("元助了 " + data.result.anc_name + " " + data.result.point + " 點失敗 " + data.message+ " ，點數剩餘 " + data.result.member_point + "點。");
+                            }else if(data.code==3){
+                                alert("請先登入");
                             }
+
+                            $("#pointInput").val('');
+                            $("#cheerInput").val('');
                         });
                 }else{
-                    alert("請先登入");
+                    alert("請輸入點數");
                 }
             });
 
@@ -179,6 +184,14 @@
 
 
             <!--region client listen event from server-->
+
+            //listen contribution for chatroom
+            var submitChatMessage = function(contributeionMsg){
+                socket.emit('chat message', fb_name, userid, contributeionMsg, fb_picture);
+                $("#chatInput").val("");
+                //submitChatMessage($('#chatInput').val());
+            }
+
 
             //listen any message for client
             socket.on('chat message'+room, function(name, msg, pic){
@@ -261,18 +274,18 @@
                 });
         };
 
+
+
         var changeFBStatus = function(response){
 
             if (response.authResponse) {
                 FB.api('/me/?fields=picture,name', function(me) {
                     document.getElementById("nameBlock").innerHTML = me.name;
-
-                    console.log('FB.me', me);
-
                     fb_name = me.name;
                     fb_picture = me.picture.data.url;
 
                     getLoginSession(response.authResponse.accessToken);
+                    userToken=response.authResponse.accessToken;
                 });
 
                 document.getElementById("loginButton").style.display = "none";
@@ -302,10 +315,11 @@
         };
 
 
+
+
         var logoutWithFacebook = function(){
             FB.logout(function(response) {
-                $.get("http://api.pkfun.xyz/api/logout/",{
-                        //accesstoken: token
+                $.get("http://api.pkfun.xyz/api/logout",{
                     },
                     function(data,status){
                         //console.log("logout:", data);

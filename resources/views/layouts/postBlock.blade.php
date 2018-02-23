@@ -4,11 +4,12 @@
         <div class="widget-post clearfix">
 
         @for($i=0; $i<3; $i++)
+                <a href="live_ins/{{$results_ep->result->data[$i]->ep_id}}">
         <div class="widget-post clearfix">
             <div class="wt-post-media">
-                <a href="live_ins/{{$results_ep->result->data[$i]->ep_id}}">
+
                     <img src="/img/gallery/{{ $results_ep->result->data[$i]->pgram_thumbnail }}" width="200" height="160" alt="">
-                </a>
+
             </div>
             <div class="wt-post-info">
                 <div class="wt-post-header">
@@ -29,6 +30,7 @@
                 </div>
             </div>
         </div>
+                </a>
         @endfor
     </div>
 </div>

@@ -1361,15 +1361,17 @@
 
 @section('scriptArea_2')
     <script>
+        var customerToken;
         $(document).ready(function(){
 
-            var customerId = "";
 
-            var getMyCardAuth = function(pid, amount, agent_id){
-                console.log(pid, amount);
+
+            var getMyCardAuth = function(token ,pid, amount, agent_id){
+                console.log(token ,pid, amount);
 
 
                 $.post("http://api.pkfun.xyz/api/mycard/getAuthCode",{
+                    "userToken" : token,
                     "ProductName": pid,
                     "Currency":"TWD",
                     "Amount": amount,
@@ -1397,7 +1399,7 @@
 
                 console.log($(this).attr("aid") + ' ' + $("#" + $(this).attr("aid")).find("input[name*='agent_id']").val());
 
-                getMyCardAuth($(this).attr("pid"), $(this).attr("amount"), $("#" + $(this).attr("aid")).find("input[name*='agent_id']").val() );
+                getMyCardAuth(customerToken,$(this).attr("pid"), $(this).attr("amount"), $("#" + $(this).attr("aid")).find("input[name*='agent_id']").val() );
 
             });
 
@@ -1427,6 +1429,7 @@
                     //console.log('FB.me', me);
                     console.log(response.authResponse.accessToken);
                     getLoginSession(response.authResponse.accessToken);
+                    customerToken = response.authResponse.accessToken;
                 });
 
                 document.getElementById("loginButton").style.display = "none";
